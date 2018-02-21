@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="pure_custom.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Register</title>
+    </h:head>
+    <h:body>
+        <h1>Đăng ký sinh viên mới</h1>
+        <h:form>
+            <p:panel header="Register New Student">
+                <h:panelGrid columns="3">
+                    <p:outputLabel value="Tài khoản"/>
+                    <p:inputText id="username" value="#{registerStudentBean.student.username}"/>
+                    <p:message for="username"/>
+                    
+                    <p:outputLabel value="Mật khẩu"/>
+                    <p:password id="password" value="#{registerStudentBean.student.password}"
+                                redisplay="true"/>
+                    <p:message for="password"/>
+                    
+                    <p:outputLabel value="Họ tên"/>
+                    <p:inputText id="fullname" value="#{registerStudentBean.student.fullname}"/>
+                    <p:message for="fullname"/>
+                    
+                    <p:outputLabel value="Giới tính"/>
+                    <p:selectOneRadio id="sex" value="#{registerStudentBean.student.sex}">
+                        <f:selectItem itemLabel="Nam" itemValue="nam"/>
+                        <f:selectItem itemLabel="Nữ" itemValue="nu"/>
+                    </p:selectOneRadio>
+                    <p:message for="sex"/>
+                    
+                    <p:outputLabel value="Email"/>
+                    <p:inputText id="email" value="#{registerStudentBean.student.email}"/>
+                    <p:message for="email"/>
+                    
+                    <p:outputLabel value="Ngày sinh"/>
+                    <p:calendar id="dob" value="#{registerStudentBean.student.dayofbirth}" 
+                                pattern="dd/MM/yyyy" placeholder="dd/MM/yyyy">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:calendar>
+                    <p:message for="dob"/>
+                    
+                    <p:outputLabel value="Lớp học"/>
+                    <p:selectOneMenu id="class" value="#{registerStudentBean.student.classid}"> 
+                        <f:selectItem itemLabel="(Chọn một lớp học)" noSelectionOption="true"/>
+                        <f:selectItems value="#{registerStudentBean.classList}"/>
+                    </p:selectOneMenu> 
+                    <p:message for="class"/>
+                    
+                    <p:commandButton value="Register" action="#{registerStudentBean.insertDb}" 
+                                     update="@form"/>
+                    <p:commandButton value="Cancel" action="/login"
+                                     immediate="true"/>
+                </h:panelGrid>
+                <p:messages id="msgs" autoUpdate="true" />
+            </p:panel>
+            
+        </h:form>
+            
+    </h:body>
+</html>

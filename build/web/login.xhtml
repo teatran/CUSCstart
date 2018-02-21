@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet library="css" name="pure_custom.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Login</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panel header="Login">
+                <h:panelGrid columns="3">
+                    <p:outputLabel value="Tài khoản"/>
+                    <p:inputText id="username" value="#{loginBean.username}" required="true"/>
+                    <p:message for="username"/>
+                    
+                    <p:outputLabel value="Mật khẩu"/>
+                    <p:password id="password" value="#{loginBean.password}" required="true" />
+                    <p:message for="password"/>
+                    
+                    <p:commandButton value="Login" action="#{loginBean.validateLogin}" 
+                                     update="@form"/>
+                    <p:commandButton value="Cancel" immediate="true"/>
+                </h:panelGrid>
+                <p:messages id="msgs" autoUpdate="true"/>
+            </p:panel>
+        </h:form>
+        <br/>
+        <h3>Nếu bạn chưa có tài khoản, vui lòng đăng ký</h3>
+        <p:button outcome="/public/register.xhtml" value="Register" styleClass="button-success"/>
+            
+    </h:body>
+</html>
+

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="pure_custom.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Secure Page</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:outputLabel>
+                You are logged in.
+            </p:outputLabel>
+            <p:commandButton action="#{loginBean.logout}" value="Log out" styleClass="button-warning"/>
+        </h:form>
+        <h:form>
+            <hr/>
+            <h1>Danh sách sinh viên cùng lớp</h1>
+            <p:dataTable var="student" value="#{loginBean.studentList}" widgetVar="studentTable"
+                         filteredValue="#{loginBean.filterStudents}">
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Tìm tất cả các cột:  " />
+                        <p:inputText id="globalFilter" onkeyup="PF('studentTable').filter()" 
+                                     style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+                <p:column headerText="Tài khoản" filterBy="#{student.username}" filterMatchMode="contains">
+                    <h:outputText value="#{student.username}"/>
+                </p:column>
+                <p:column headerText="Họ tên" filterBy="#{student.fullname}" filterMatchMode="contains">
+                    <h:outputText value="#{student.fullname}"/>
+                </p:column>
+                <p:column headerText="Nam">
+                    <h:selectBooleanCheckbox value="#{student.sex eq 'nam'}" readonly="true"/>
+                </p:column>
+                <p:column headerText="Lớp học"  filterBy="#{student.classname}" filterMatchMode="contains">
+                    <h:outputText value="#{student.classname}"/>
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Edit" process="@this" update="@form"
+                                     action="#{loginBean.showEditStudent(student.studentid)}" />
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Delete" onclick="return confirm('Bạn thật sự muốn xóa?');"
+                                     process="@this" update="@form"
+                                     action="#{loginBean.deleteStudent(student.studentid)}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
